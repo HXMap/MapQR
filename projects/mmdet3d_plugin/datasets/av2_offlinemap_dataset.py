@@ -1226,44 +1226,52 @@ class CustomAV2OfflineLocalMapDataset(CustomNuScenesDataset):
             print('-*'*10+f'use metric:{metric}'+'-*'*10)
 
             if metric == 'chamfer':
-                thresholds = [0.5,1.0,1.5]
+                thresholds = [0.2, 0.5, 1.0, 1.5]
             elif metric == 'iou':
-                thresholds= np.linspace(.5, 0.95, int(np.round((0.95 - .5) / .05)) + 1, endpoint=True)
-            cls_aps = np.zeros((len(thresholds),self.NUM_MAPCLASSES))
+                thresholds = np.linspace(.5, 0.95, int(np.round((0.95 - .5) / .05)) + 1, endpoint=True)
+            cls_aps = np.zeros((len(thresholds), self.NUM_MAPCLASSES))
 
             for i, thr in enumerate(thresholds):
-                print('-*'*10+f'threshhold:{thr}'+'-*'*10)
+                print('-*' * 10 + f'threshhold:{thr}' + '-*' * 10)
                 mAP, cls_ap = eval_map(
-                                gen_results,
-                                annotations,
-                                cls_gens,
-                                cls_gts,
-                                threshold=thr,
-                                cls_names=self.MAPCLASSES,
-                                logger=logger,
-                                num_pred_pts_per_instance=self.fixed_num,
-                                pc_range=self.pc_range,
-                                metric=metric,
-                                code_size=self.code_size)
+                    gen_results,
+                    annotations,
+                    cls_gens,
+                    cls_gts,
+                    threshold=thr,
+                    cls_names=self.MAPCLASSES,
+                    logger=logger,
+                    num_pred_pts_per_instance=self.fixed_num,
+                    pc_range=self.pc_range,
+                    metric=metric,
+                    code_size=self.code_size)
                 for j in range(self.NUM_MAPCLASSES):
                     cls_aps[i, j] = cls_ap[j]['ap']
 
+            cls_aps1 = cls_aps[0:3]
+            cls_aps2 = cls_aps[1:4]
             for i, name in enumerate(self.MAPCLASSES):
-                print('{}: {}'.format(name, cls_aps.mean(0)[i]))
-                detail['AV2Map_{}/{}_AP'.format(metric,name)] =  cls_aps.mean(0)[i]
-            print('map: {}'.format(cls_aps.mean(0).mean()))
-            detail['AV2Map_{}/mAP'.format(metric)] = cls_aps.mean(0).mean()
+                print('{}: {}'.format(name, cls_aps1.mean(0)[i]))
+                detail['NuscMap_{}/{}_AP'.format(metric, name)] = cls_aps1.mean(0)[i]
+            print('map: {}'.format(cls_aps1.mean(0).mean()))
+            detail['NuscMap_{}/mAP'.format(metric)] = cls_aps1.mean(0).mean()
+
+            print('------------------------------')
+            for i, name in enumerate(self.MAPCLASSES):
+                print('{}: {}'.format(name, cls_aps2.mean(0)[i]))
+                detail['NuscMap_{}/{}_AP'.format(metric, name)] = cls_aps2.mean(0)[i]
+            print('map: {}'.format(cls_aps2.mean(0).mean()))
+            detail['NuscMap_{}/mAP'.format(metric)] = cls_aps2.mean(0).mean()
 
             for i, name in enumerate(self.MAPCLASSES):
                 for j, thr in enumerate(thresholds):
                     if metric == 'chamfer':
-                        detail['AV2Map_{}/{}_AP_thr_{}'.format(metric,name,thr)]=cls_aps[j][i]
+                        detail['AV2Map_{}/{}_AP_thr_{}'.format(metric, name, thr)] = cls_aps[j][i]
                     elif metric == 'iou':
                         if thr == 0.5 or thr == 0.75:
-                            detail['AV2Map_{}/{}_AP_thr_{}'.format(metric,name,thr)]=cls_aps[j][i]
+                            detail['AV2Map_{}/{}_AP_thr_{}'.format(metric, name, thr)] = cls_aps[j][i]
 
         return detail
-
 
     def evaluate(self,
                  results,

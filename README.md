@@ -42,6 +42,14 @@ The main contribution is the proposed scatter-and-gather query, illustrated in t
 |  MapQR  |   R50    |  24   | 43.3 | 66.4 | [config](projects/configs/mapqr/mapqr_nusc_r50_24ep.py) | [model](https://mycuhk-my.sharepoint.com/:u:/g/personal/1155168294_link_cuhk_edu_hk/EXrwWu0yvz5Ap_aU9FFb4x8BahsKfdFgYW7TgnpsIKho2Q?e=s2CnGT) |
 |  MapQR  |   R50    |  110  | 50.5 | 72.6 | [config](projects/configs/mapqr/mapqr_nusc_r50_24ep.py) | [model](https://mycuhk-my.sharepoint.com/:u:/g/personal/1155168294_link_cuhk_edu_hk/EV-zT_ZOIaNEvOCMNuEqjIAB2GnV8HzR-cfskRmdOJcBPQ?e=uOefF4) |
 
+#### Argoverse 2 dataset
+
+| Method  | Backbone | Epoch | dim  | mAP1 | mAP2 |                         Config                          |                                                                   Download                                                                   |
+|:-------:|:--------:|:-----:|:----:|:----:|:----:|:-------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------:|
+|  MapQR  |   R50    |   6   |  2   | 44.8 | 68.1 | [config](projects/configs/mapqr/mapqr_av2_r50_6ep.py) | [model](https://mycuhk-my.sharepoint.com/:u:/g/personal/1155168294_link_cuhk_edu_hk/EanLLdOtaTZLkE-aKrSy-VcB5Vh4mxfERRtno7qi4efIUg?e=ISTrRn) |
+|  MapQR  |   R50    |   6   |  3   | 41.2 | 65.4 | [config](projects/configs/mapqr/mapqr_av2_3d_r50_6ep.py) | [model](https://mycuhk-my.sharepoint.com/:u:/g/personal/1155168294_link_cuhk_edu_hk/EXXCw8AnArtDl7-1lWHh_1ABBwob12MeIfLEzQOPr2MpZg?e=2vXhWl) |
+
+
 
 - mAP1 is measured under the thresholds { 0.2, 0.5, 1.0 }
 - mAP2 is measured under the thresholds { 0.5, 1.0, 1.5 }

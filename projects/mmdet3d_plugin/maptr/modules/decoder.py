@@ -55,12 +55,14 @@ class MapTRDecoder(TransformerLayerSequence):
     def __init__(self, *args, return_intermediate=False,
                  query_pos_embedding='none',
                  num_pts_per_vec=20,
+                 pt_dim=2,
                  **kwargs):
         super(MapTRDecoder, self).__init__(*args, **kwargs)
         self.return_intermediate = return_intermediate
         self.fp16_enabled = False
         self.query_pos_embedding = query_pos_embedding
         self.num_pts_per_vec = num_pts_per_vec
+        self.pt_dim = pt_dim
         if query_pos_embedding == 'instance':
             def _get_clones(module, N):
                 return nn.ModuleList([copy.deepcopy(module) for i in range(N)])
@@ -104,9 +106,9 @@ class MapTRDecoder(TransformerLayerSequence):
         bs = reference_points.shape[0]
         for lid, layer in enumerate(self.layers):
             if self.query_pos_embedding == 'instance':
-                reference_points_reshape = reference_points.view(bs, -1, self.num_pts_per_vec, 2)
-                reference_points_reshape = reference_points_reshape.view(bs, -1, 2)
-                query_sine_embed = gen_sineembed_for_position(reference_points_reshape)
+                reference_points_reshape = reference_points.view(bs, -1, self.num_pts_per_vec, self.pt_dim)
+                reference_points_reshape = reference_points_reshape.view(bs, -1, self.pt_dim)
+                query_sine_embed = gen_sineembed_for_position(reference_points_reshape[..., :2])
                 query_sine_embed = query_sine_embed.view(bs, -1, self.num_pts_per_vec, self.embed_dims)
                 point_query_pos = self.pt_pos_query_projs[lid](query_sine_embed)
                 query_pos_lid = None

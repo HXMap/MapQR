@@ -66,8 +66,8 @@ aux_seg_cfg = dict(
 )
 
 z_cfg = dict(
-    pred_z_flag=False,
-    gt_z_flag=False,
+    pred_z_flag=True,
+    gt_z_flag=True,
 )
 
 model = dict(
@@ -112,7 +112,7 @@ model = dict(
         sync_cls_avg_factor=True,
         with_box_refine=True,
         as_two_stage=False,
-        code_size=2,
+        code_size=3,
         code_weights=[1.0, 1.0, 1.0, 1.0],
         aux_seg=aux_seg_cfg,
         z_cfg=z_cfg,
@@ -163,6 +163,7 @@ model = dict(
                 return_intermediate=True,
                 query_pos_embedding='instance',
                 num_pts_per_vec=fixed_ptsnum_per_pred_line,
+                pt_dim=3,
                 transformerlayers=dict(
                     type='DetrTransformerDecoderLayer',
                     attn_cfgs=[
@@ -234,7 +235,7 @@ model = dict(
             pc_range=point_cloud_range))))
 
 dataset_type = 'CustomAV2OfflineLocalMapDataset'
-data_root = 'data/argoverse2/sensor/'
+data_root = 'data_bak/argoverse2/sensor/'
 file_client_args = dict(backend='disk')
 
 train_pipeline = [

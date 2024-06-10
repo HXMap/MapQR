@@ -99,10 +99,11 @@ class MapTRPerceptionTransformer(BaseModule):
         self.cams_embeds = nn.Parameter(
             torch.Tensor(self.num_cams, self.embed_dims))
         if self.query_pos_embedding == 'instance':
+            pt_dim = 3 if self.z_cfg['gt_z_flag'] else 2
             self.reference_points = nn.Sequential(
                 nn.Linear(self.embed_dims, self.embed_dims),
                 nn.ReLU(),
-                nn.Linear(self.embed_dims, 2 * self.num_pts_per_vec),
+                nn.Linear(self.embed_dims, pt_dim * self.num_pts_per_vec),
             )
         else:
             self.reference_points = nn.Linear(self.embed_dims, 2) if not self.z_cfg['gt_z_flag'] \

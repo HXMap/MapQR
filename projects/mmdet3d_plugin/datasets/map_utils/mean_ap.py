@@ -57,12 +57,12 @@ def average_precision(recalls, precisions, mode='area'):
         ap = ap[0]
     return ap
 
-def get_cls_results(gen_results, 
-                    annotations, 
-                    num_sample=100, 
+def get_cls_results(gen_results,
+                    annotations,
+                    num_sample=100,
                     num_pred_pts_per_instance=30,
                     eval_use_same_gt_sample_num_flag=False,
-                    class_id=0, 
+                    class_id=0,
                     fix_interval=False,
                     code_size=2):
     """Get det results and gt information of a certain class.
@@ -101,7 +101,7 @@ def get_cls_results(gen_results,
                         distances = np.linspace(0, line.length, num_sample)
                         sampled_points = np.array([list(line.interpolate(distance).coords)
                                                     for distance in distances]).reshape(-1, code_size)
-                
+
             cls_gens.append(sampled_points)
             cls_scores.append(res['confidence_level'])
     num_res = len(cls_gens)
@@ -126,8 +126,9 @@ def get_cls_results(gen_results,
             line = LineString(line)
             distances = np.linspace(0, line.length, num_sample)
             sampled_points = np.array([list(line.interpolate(distance).coords)
-                                        for distance in distances]).reshape(-1, code_size)
-            
+                                       for distance in distances]).reshape(-1, 3)
+            sampled_points = sampled_points[..., : code_size]
+
             cls_gts.append(sampled_points)
     num_gts = len(cls_gts)
     if num_gts > 0:
@@ -184,7 +185,7 @@ def format_res_gt_by_classes(result_path,
 
             for line in gen_results[i]['vectors']:
                 l = np.array(line['pts'])
-                plt.plot(l[:,0],l[:,1],'-', 
+                plt.plot(l[:,0],l[:,1],'-',
                 # color=colors[line['type']]
                 color = 'red',
                 )
@@ -193,7 +194,7 @@ def format_res_gt_by_classes(result_path,
                 # l = np.array(line['pts']) + np.array((1,1))
                 l = np.array(line['pts'])
                 # l = line['pts']
-                plt.plot(l[:,0],l[:,1],'-', 
+                plt.plot(l[:,0],l[:,1],'-',
                     # color=colors[line['type']],
                     color = 'blue',
                     )
@@ -209,14 +210,14 @@ def format_res_gt_by_classes(result_path,
                         num_pred_pts_per_instance=num_pred_pts_per_instance,
                         eval_use_same_gt_sample_num_flag=eval_use_same_gt_sample_num_flag,class_id=i,fix_interval=fix_interval,
                         code_size=code_size),
-                    zip(gen_results, annotations))   
+                    zip(gen_results, annotations))
         # gengts = map(partial(get_cls_results, num_sample=num_fixed_sample_pts, class_id=i,fix_interval=fix_interval),
         #             zip(gen_results, annotations))
         # import pdb;pdb.set_trace()
         gens, gts = tuple(zip(*gengts))
         cls_gens[clsname] = gens
         cls_gts[clsname] = gts
-    
+
     mmcv.dump([cls_gens, cls_gts],formatting_file)
     print('Cls data formatting done in {:2f}s!! with {}'.format(float(timer.since_start()),formatting_file))
     pool.close()
@@ -239,9 +240,9 @@ def eval_map(gen_results,
     pool = Pool(nproc)
 
     eval_results = []
-    
+
     for i, clsname in enumerate(cls_names):
-        
+
         # get gt and det bboxes of this class
         cls_gen = cls_gens[clsname]
         cls_gt = cls_gts[clsname]
@@ -282,12 +283,12 @@ def eval_map(gen_results,
         #     print(i)
         #     tpfp = (tpfp,)
         #     print(tpfp)
-        # i = 0 
+        # i = 0
         # tpfp = tpfp_fn(cls_gen[i], cls_gt[i],threshold=threshold)
         # import pdb; pdb.set_trace()
 
         # XXX
-        
+
         num_gts = 0
         for j, bbox in enumerate(cls_gt):
             num_gts += bbox.shape[0]
@@ -299,7 +300,7 @@ def eval_map(gen_results,
         sort_inds = np.argsort(-cls_gen[:, -1]) #descending, high score front
         tp = np.hstack(tp)[sort_inds]
         fp = np.hstack(fp)[sort_inds]
-        
+
         # calculate recall and precision with tp and fp
         # num_det*num_res
         tp = np.cumsum(tp, axis=0)
