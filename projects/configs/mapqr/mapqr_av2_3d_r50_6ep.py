@@ -235,7 +235,7 @@ model = dict(
             pc_range=point_cloud_range))))
 
 dataset_type = 'CustomAV2OfflineLocalMapDataset'
-data_root = 'data_bak/argoverse2/sensor/'
+data_root = 'data/argoverse2/sensor/'
 file_client_args = dict(backend='disk')
 
 train_pipeline = [
