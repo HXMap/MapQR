@@ -18,6 +18,9 @@ ArXiv Preprint ([arXiv 2402.17430](https://arxiv.org/abs/2402.17430))
 
 </div>
 
+## 🔥 News
+- *2024.07*: &nbsp;🎉🎉 MapQR is accepted in ECCV 2024! 
+
 ## Overview
 ![pipeline](assets/pipeline.jpg "pipeline")
 This project introduces MapQR, an end-to-end method with an emphasis on enhancing query capabilities for constructing online vectorized maps.
@@ -76,10 +79,10 @@ It is also greatly inspired by the following outstanding contributions to the op
 If you find MapQR is useful in your research or applications, 
 please consider giving us a star 🌟 and citing it by the following BibTeX entry.
 ```bibtex
-@article{liu2024leveraging,
+@inproceedings{liu2024leveraging,
   title={Leveraging Enhanced Queries of Point Sets for Vectorized Map Construction},
   author={Liu, Zihao and Zhang, Xiaoyu and Liu, Guangwei and Zhao, Ji and Xu, Ningyi},
-  journal={arXiv preprint arXiv:2402.17430},
+  booktitle={European Conference on Computer Vision},
   year={2024}
 }
 ```
