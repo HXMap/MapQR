@@ -3,7 +3,7 @@
 <h3>Leveraging Enhanced Queries of Point Sets for Vectorized Map Construction</h3>
 
 Zihao Liu<sup>1*</sup>, 
-[Xiaoyu Zhang](https://scholar.google.com/citations?hl=zh-CN&user=GUbdeFsAAAAJ&view_op=list_works&sortby=pubdate)<sup>2*</sup>, 
+[Xiaoyu Zhang](https://fishmarch.github.io)<sup>2*</sup>, 
 Guangwei Liu<sup>3*</sup>,
 [Ji Zhao](https://sites.google.com/site/drjizhao/)<sup>3#</sup>,
 [Ningyi Xu](http://www.qingyuan.sjtu.edu.cn/a/xu-ning-yi-1.html)<sup>1#</sup>
@@ -16,9 +16,12 @@ Guangwei Liu<sup>3*</sup>,
 
 ArXiv Preprint ([arXiv 2402.17430](https://arxiv.org/abs/2402.17430))
 
+Accepted by **ECCV 2024**
+
 </div>
 
 ## 🔥 News
+- *2024.08*: &nbsp;🎉🎉 Our new work [HRMapNet](https://github.com/HXMap/HRMapNet) is now released, it utilizes historical information to enhance HD map construction!
 - *2024.07*: &nbsp;🎉🎉 MapQR is accepted in ECCV 2024! 
 
 ## Overview
