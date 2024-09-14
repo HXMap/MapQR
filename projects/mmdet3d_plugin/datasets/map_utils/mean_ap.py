@@ -64,7 +64,8 @@ def get_cls_results(gen_results,
                     eval_use_same_gt_sample_num_flag=False,
                     class_id=0,
                     fix_interval=False,
-                    code_size=2):
+                    code_size=2,
+                    dataset_code_size=3):
     """Get det results and gt information of a certain class.
 
     Args:
@@ -126,7 +127,7 @@ def get_cls_results(gen_results,
             line = LineString(line)
             distances = np.linspace(0, line.length, num_sample)
             sampled_points = np.array([list(line.interpolate(distance).coords)
-                                       for distance in distances]).reshape(-1, 3)
+                                       for distance in distances]).reshape(-1, dataset_code_size)
             sampled_points = sampled_points[..., : code_size]
 
             cls_gts.append(sampled_points)
@@ -148,6 +149,7 @@ def format_res_gt_by_classes(result_path,
                              eval_use_same_gt_sample_num_flag=False,
                              pc_range=[-15.0, -30.0, -5.0, 15.0, 30.0, 3.0],
                              code_size=2,
+                             dataset_code_size=3,
                              nproc=24):
     assert cls_names is not None
     timer = mmcv.Timer()
@@ -209,7 +211,8 @@ def format_res_gt_by_classes(result_path,
                     partial(get_cls_results, num_sample=num_fixed_sample_pts,
                         num_pred_pts_per_instance=num_pred_pts_per_instance,
                         eval_use_same_gt_sample_num_flag=eval_use_same_gt_sample_num_flag,class_id=i,fix_interval=fix_interval,
-                        code_size=code_size),
+                        code_size=code_size,
+                        dataset_code_size=dataset_code_size),
                     zip(gen_results, annotations))
         # gengts = map(partial(get_cls_results, num_sample=num_fixed_sample_pts, class_id=i,fix_interval=fix_interval),
         #             zip(gen_results, annotations))

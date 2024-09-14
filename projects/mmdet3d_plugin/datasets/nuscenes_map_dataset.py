@@ -1395,7 +1395,8 @@ class CustomNuScenesLocalMapDataset(CustomNuScenesDataset):
                                                      cls_names=self.MAPCLASSES,
                                                      num_pred_pts_per_instance=self.fixed_num,
                                                      eval_use_same_gt_sample_num_flag=self.eval_use_same_gt_sample_num_flag,
-                                                     pc_range=self.pc_range)
+                                                     pc_range=self.pc_range,
+                                                     dataset_code_size=2)
 
         metrics = metric if isinstance(metric, list) else [metric]
         allowed_metrics = ['chamfer', 'iou']
