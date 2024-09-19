@@ -6,7 +6,7 @@ Following https://mmdetection3d.readthedocs.io/en/latest/getting_started.html#in
 
 **a. Create a conda virtual environment and activate it.**
 ```shell
-conda create -n maptr python=3.8 -y
+conda create -n mapqr python=3.8 -y
 conda activate mapqr
 ```
 
@@ -69,3 +69,6 @@ cd ckpts
 wget https://download.pytorch.org/models/resnet50-19c8e357.pth
 ```
 
+### Installed packages for reference.
+
+[pip.txt](https://github.com/user-attachments/files/17054049/pip.txt)
