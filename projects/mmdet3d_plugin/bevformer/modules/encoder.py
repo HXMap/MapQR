@@ -146,7 +146,7 @@ class BEVFormerEncoder(TransformerLayerSequence):
 
         return reference_points_cam, bev_mask
 
-    @auto_fp16()
+    # @auto_fp16() # This may cause 'grad_norm: nan'
     def forward(self,
                 bev_query,
                 key,
