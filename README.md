@@ -67,6 +67,9 @@ These settings keep the same as [MapTRv2](https://github.com/hustvl/MapTR/tree/m
 - [Train and Eval](docs/train_eval.md)
 - [Visualization](docs/visualization.md)
 
+### Note
+If you meet nan during training, you could comment out this line:
+https://github.com/HXMap/MapQR/blob/d05554cffe7a82785570dfec9ed8dc980989d213/projects/mmdet3d_plugin/bevformer/modules/encoder.py#L149
 
 ## Acknowledgements
 
